@@ -1,49 +1,48 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState, memo } from 'react'
 
-class Twitter extends Component {
-
-  state = {
-    tweet: 'title'
-  }
-
-  componentDidMount() {
-    const { posts, loading } = this.props
-    console.log('componentDidMount', posts)
-    console.log('componentDidMount:loading', loading)
-    
-  }
-
-  componentDidUpdate(prevProps) {
-    const { loading } = this.props
-    if (this.props.loading !== prevProps.loading) {
-      console.log('componentDidUpdate:loading', loading)
-    }
-  }
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount: fui removido :(')
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.tweet !== nextState.tweet
-  }
-
-  tweet = () => {
-    this.setState({
-      tweet: true
-    })
-  }
-
-  render () {
-    const { posts } = this.props
-    console.log('render', posts)
-    return (
-      <div>
-        <button onClick={this.tweet}>Re-render</button>
-        tests
-      </div>
-    )
-  }
+// shouldComponentUpdate
+const areEqual = (prevProps, nextProps) => {
+  return prevProps.loading === nextProps.loading
 }
 
-export default Twitter;
+function Twitter(props) {
+  const { loading } = props
+  const [tweet, setTweet] = useState()
+  
+  //componentDidMount, por causa do array vazio  
+  //no segundo argumento, só executa uma vez
+  useEffect(() => {
+    const { posts, loading } = props
+    console.log('componentDidMount', posts)
+    console.log('componentDidMount:loading', loading)
+  }, [])
+
+  // componentDidUpdate, toda vez que o loading for alterado
+  // o componente vai passar aqui dentro 
+  useEffect(() => {
+    console.log('componentDidUpdate', loading)
+  }, [loading])
+
+  //componentWillUnmount
+  useEffect(() => {
+    // tudo que tiver sendo retornado dentro do userEffect
+    // é a parte do componentWillUnmount
+    return () => {
+      console.log('componentWillUnmount: fui removido :(')
+    }
+  }, [])
+
+  const handleTweet = () => {
+    setTweet('Tweet atualizado')
+  }
+
+  console.log('Tweet atualizado:', tweet)
+  return (
+    <div>
+      <button onClick={handleTweet}>Re-render</button>
+      tests
+    </div>
+    )
+}
+
+export default memo(Twitter, areEqual)

@@ -25,11 +25,11 @@ class App extends Component {
   render () {
     
     const posts = [{
-      title: 'React',
-      description: 'Tutorial de react'
+      title: 'xpto',
+      description: 'foo'
     },{
-      title: 'Django',
-      description: 'Tutorial de Django'
+      title: 'xpto',
+      description: 'foo'
     }]
 
     return (
