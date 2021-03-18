@@ -1,30 +1,17 @@
-import React, { useRef, useEffect, useState } from 'react';
-
-function App (){
-  const inputRef = useRef()
-  const count = useRef(1)
-  const [, setValue] = useState(false)
+import React from 'react';
+import Button from './components/Button'
+function App(){
 
   const handleClick = () => {
-    inputRef.current.focus()
-    console.log('inputRef.current: ', inputRef)
+    console.log('Adicionado no carrinho')
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('Passou aqui!')
-      count.current = 300
-      setValue(true)
-    }, 3000)
-  })
   return(
-    <>
-      <h1>Valor do count { count.current }</h1>
-      Foco: <input ref={ inputRef } />
-      <br />
-      <br />
-      <button onClick={handleClick}>Focar</button>
-    </>
+    <Button
+      onClick={handleClick}
+    >
+      Adicionar ao carrinho
+    </Button>
   )
 }
 
