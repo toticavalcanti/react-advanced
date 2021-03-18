@@ -13,7 +13,7 @@ function Button(props){
   )
 }
 
-Button.PropTypes = {
+Button.propTypes = {
   onClick: PropTypes.func.isRequired
 }
 
